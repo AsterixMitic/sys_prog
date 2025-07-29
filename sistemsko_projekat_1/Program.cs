@@ -74,6 +74,12 @@ namespace sistemsko_projekat_1
                 }
 
                 JObject json = JObject.Parse(content);
+                if ((int)json.First.Last == 0)
+                {
+                    SendResponse(context, $"Nema rezultata za:  '{query}'.");
+                    Console.WriteLine("[USPESNO] : Nema rezultata za query");
+                    return;
+                }
                 JArray ids = (JArray)json["objectIDs"] ?? new JArray();
                 if (ids.Count == 0)
                 {
@@ -81,6 +87,7 @@ namespace sistemsko_projekat_1
                     Console.WriteLine("[USPESNO] : Nema rezultata za query");
                     return;
                 }
+
 
                 string result = $"Pronadjeno {ids.Count} instanci za: '{query}':\n";
                 int shown = 0;
